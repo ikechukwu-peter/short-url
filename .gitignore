@@ -1,0 +1,16 @@
+# ENV
+.ENV
+
+#LOGS
+*.LOGS
+
+
+# BUILD
+build
+
+# node_modules
+node_modules
+
+
+#errors
+*.error
