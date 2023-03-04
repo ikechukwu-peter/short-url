@@ -1,4 +1,3 @@
-import * as dotenv from "dotenv";
 import express, {
   type Application,
   type Request,
@@ -10,9 +9,10 @@ import helmet from "helmet";
 import compression from "compression";
 // @ts-expect-error: there is no type for this package
 import xssClean from "xss-clean";
-import { mainLogger } from "./logger";
+import { configs } from "./config";
 
-dotenv.config();
+import "./db/mongodb";
+import { mainLogger } from "./logger";
 
 const apiLimiter = rateLimit({
   windowMs: 10 * 60 * 1000, // 10 minutes
@@ -52,7 +52,7 @@ app.all("*", (req: Request, res: Response) => {
 });
 
 // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-const PORT = (process.env.PORT as unknown as number) || 5000;
+const PORT = configs.PORT || 5000;
 
 app.listen(PORT, () => {
   mainLogger.info(`Server listening on port ${PORT}`);
