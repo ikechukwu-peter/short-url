@@ -28,10 +28,14 @@ const urlSchema = new Schema<IURL>(
     isPasswordEnabled: { type: Boolean, default: false },
   },
   {
+    autoIndex: true,
     timestamps: true,
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
   }
 );
+
+// TTL
+urlSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 
 export const URLModel = model<IURL>("URL", urlSchema);
