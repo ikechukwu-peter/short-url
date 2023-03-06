@@ -13,6 +13,7 @@ import { configs } from "./config";
 
 import "./db/mongodb";
 import { mainLogger } from "./logger";
+import { authRouter } from "./routes";
 
 const apiLimiter = rateLimit({
   windowMs: 10 * 60 * 1000, // 10 minutes
@@ -42,6 +43,8 @@ app.use(compression());
 app.use(apiLimiter);
 // clean againt injections
 app.use(xssClean());
+
+app.use("/auth", authRouter);
 
 app.get("/get/ping", (req: Request, res: Response) => {
   res.send("pong");
